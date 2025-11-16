@@ -8,7 +8,9 @@ export const getDeviceListController = asyncHandler(async (req, res) => {
 
   const tokenPayload = req.auth;
 
-  const data = await getDeviceList(tokenPayload, Number(page), Number(limit));
+  const adminSerialNum = req.query.serialNum || null;
+  
+  const data = await getDeviceList(tokenPayload, Number(page), Number(limit),adminSerialNum);
 
   return res
     .status(HTTP_STATUS.OK)

@@ -5,7 +5,7 @@ import {
 import { findUserById } from "../repositories/auth.repository.js";
 import { UnauthorizedError } from "../../utils/error.util.js"
 
-export async function getDeviceList(tokenPayload, page = 1, limit = 10) {
+export async function getDeviceList(tokenPayload, page = 1, limit = 10, adminSerialNum = null) {
   const userId = tokenPayload.userId;
 
   const user = await findUserById(userId);
@@ -13,10 +13,15 @@ export async function getDeviceList(tokenPayload, page = 1, limit = 10) {
     throw new UnauthorizedError("유효하지 않은 사용자입니다.");
   }
 
-  const serialNum = user.serial_num;
+  let serialNum;
+  if (user.role === "ADMIN" && adminSerialNum) {
+    serialNum = adminSerialNum;
+  }
+  else {
+    serialNum = user.serial_num;
+  }
 
   const totalCount = await countDevicesBySerialNum(serialNum);
-
   const devices = await findDevicesBySerialNum(serialNum, page, limit);
 
   const list = devices.map(d => ({

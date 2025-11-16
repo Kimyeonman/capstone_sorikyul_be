@@ -9,29 +9,36 @@
  * @swagger
  * /api/device/list:
  *   get:
- *     summary: 자신의 라즈베리파이와 연결된 디바이스 로그 조회
- *     description: |
- *       로그인된 사용자의 serialNum(라즈베리파이 ID)을 기준으로  
- *       Type.resberry_id 와 일치하는 디바이스 로그만 조회합니다.  
- *       Noise + Type 정보를 포함하여 반환하며, 페이지네이션이 가능합니다.
+ *     summary: 디바이스 로그 조회
+ *     description: >
+ *       **사용자(User)**는 자신의 serial_num(라즈베리파이 ID)에 해당하는 디바이스 로그만 조회할 수 있습니다.  
+ *       **관리자(Admin)**는 `serialNum` 쿼리 파라미터를 통해 아무 기기나 선택하여 조회할 수 있습니다.
  *
  *     tags: [Device]
  *     security:
  *       - bearerAuth: []
  *
  *     parameters:
+ *       - name: serialNum
+ *         in: query
+ *         required: false
+ *         description: "관리자(Admin) 전용. 조회하려는 라즈베리파이 기기 ID"
+ *         schema:
+ *           type: string
+ *           example: "A1B2C3D4E5F6"
+ *
  *       - name: page
  *         in: query
- *         description: 페이지 번호
  *         required: false
+ *         description: "페이지 번호 (기본값: 1)"
  *         schema:
  *           type: integer
  *           default: 1
  *
  *       - name: limit
  *         in: query
- *         description: 한 페이지 당 출력 개수
  *         required: false
+ *         description: "한 페이지 당 데이터 수 (기본값: 10)"
  *         schema:
  *           type: integer
  *           default: 10
@@ -46,6 +53,7 @@
  *               properties:
  *                 success:
  *                   type: boolean
+ *                   example: true
  *                 data:
  *                   type: object
  *                   properties:
@@ -77,17 +85,25 @@
  *                                 example: "uuid-noise-id"
  *                               dba:
  *                                 type: integer
- *                                 example: 78
+ *                                 example: 65
  *                               vibration:
  *                                 type: string
  *                                 example: "4095"
  *                               isNoise:
  *                                 type: boolean
- *                                 example: true
+ *                                 example: false
  *                               createdAt:
  *                                 type: string
+ *                                 example: "2025-01-01T12:00:00.000Z"
  *                               updatedAt:
  *                                 type: string
+ *                                 example: "2025-01-01T12:00:00.000Z"
+ *                           createdAt:
+ *                             type: string
+ *                             example: "2025-01-01T12:00:00.000Z"
+ *                           updatedAt:
+ *                             type: string
+ *                             example: "2025-01-01T12:00:00.000Z"
  *                     pagination:
  *                       type: object
  *                       properties:
@@ -105,5 +121,9 @@
  *                           example: 3
  *
  *       401:
- *         description: 인증 실패
+ *         description: 인증 실패 — AccessToken 없음 또는 잘못됨
+ *       403:
+ *         description: 관리자만 serialNum 직접 지정 가능
+ *       500:
+ *         description: 서버 오류
  */
