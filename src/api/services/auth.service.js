@@ -5,6 +5,7 @@ import {
   findUserByEmail,
   findUserByNickName,
   createUser,
+  findResberryId,
 }
 from '../repositories/auth.repository.js';
 import {
@@ -15,7 +16,7 @@ from "../repositories/token.repository.js"
 import { ConflictError, UnauthorizedError, BadRequestError } from '../../utils/error.util.js';
 dotenv.config();
 
-export async function signup(email, password, nickName) {
+export async function signup(email, password, nickName, serialNum) {
   const existing = await findUserByEmail(email);
   if (existing)
     throw new ConflictError(
@@ -29,13 +30,20 @@ export async function signup(email, password, nickName) {
       `닉네임 '${nickName}'은(는) 이미 사용 중입니다. 다른 닉네임을 선택해주세요. 닉네임은 고유해야 하며, 다른 사용자와 중복될 수 없습니다.`,
       'DUPLICATE_NICKNAME'
     );
-
+  
+    const rpiExists = await findResberryId(serialNum);
+    if(!rpiExists)
+      throw new ConflictError(
+        `해당 라즈베리파이 ID(${serialNum})는 존재하지 않습니다.`
+      );
+    
   const hashed = await argon2.hash(password);
 
   const user = await createUser({
     email,
     password: hashed,
     nick_name: nickName,
+    serial_num: serialNum,
     role: "USER",
     refresh_token: "", 
   });
@@ -45,10 +53,9 @@ export async function signup(email, password, nickName) {
   await updateRefreshToken(user.user_id, refreshToken);
 
   return {
-    // 수정된 부분
-    // https://github.com/fs08-docthrough-team2/fs08-docthrough-team2-be/commit/daffca0dfbf4316d0a58db8745e6f9b80e7a1c9a
     userId: user.user_id,
     email: user.email,
+    serialNum: user.serial_num,
     nickName: user.nick_name,
     role: user.role,
     accessToken, 

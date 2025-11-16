@@ -128,45 +128,6 @@ export function validateRequiredString(value, res, errorCode, errorMessage) {
 }
 
 /**
- * ChallengeField 검증
- */
-export function validateChallengeField(field, res, ChallengeField) {
-  return validateEnum(
-    field,
-    ChallengeField,
-    res,
-    VALIDATION_ERROR_CODE.INVALID_FIELD,
-    VALIDATION_MESSAGE.INVALID_FIELD
-  );
-}
-
-/**
- * ChallengeType 검증
- */
-export function validateChallengeType(type, res, ChallengeType) {
-  return validateEnum(
-    type,
-    ChallengeType,
-    res,
-    VALIDATION_ERROR_CODE.INVALID_TYPE,
-    VALIDATION_MESSAGE.INVALID_TYPE
-  );
-}
-
-/**
- * ChallengeStatus 검증
- */
-export function validateChallengeStatus(status, res, ChallengeStatus) {
-  return validateEnum(
-    status,
-    ChallengeStatus,
-    res,
-    VALIDATION_ERROR_CODE.INVALID_STATUS,
-    VALIDATION_MESSAGE.INVALID_STATUS
-  );
-}
-
-/**
  * Sort 검증
  */
 export function validateSort(sort, res, SORT_ORDER) {
@@ -209,9 +170,6 @@ export default {
   validateEnum,
   sanitizeString,
   validateRequiredString,
-  validateChallengeField,
-  validateChallengeType,
-  validateChallengeStatus,
   validateSort,
   validateChallengeId,
   validateUserId,

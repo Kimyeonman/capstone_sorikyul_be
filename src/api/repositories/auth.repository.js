@@ -31,3 +31,9 @@ export async function findUserByNickName(nick_name){
     },
   });
 }
+
+export async function findResberryId(serial_num){
+  return prisma.type.findFirst({
+    where: { resberry_id: serial_num },
+  });
+}

@@ -14,26 +14,18 @@ import adminRoutes from "./api/routes/admin.route.js"
 import userRoutes from "./api/routes/user.route.js"
 import googleRoutes from "./api/routes/auth.google.route.js"
 import kakaoRoutes from "./api/routes/auth.kakao.route.js"
-
-import challengeAdminRoute from './api/routes/challenge.admin.route.js';
-import challengeInquiryRoute from './api/routes/challenge.inquiry.route.js';
-import challengeCRUDRoute from './api/routes/challenge.crud.route.js'
-
-import noticeRoute from './api/routes/notice.route.js';
-import challengeworkRoute from "./api/routes/challenge.work.route.js";
-import challengeFeedbackRoute from "./api/routes/challenge.feedback.route.js"
+import deviceRoutes from "./api/routes/device.route.js";
 
 // 공통 미들웨어 임포트
 import { errorHandler } from './middleware/error.middleware.js';
 import { swaggerDocs } from './config/swagger.config.js';
 import cors from './config/cors.config.js';
+
 import prisma from './config/prisma.config.js';
-import { startScheduler } from './config/cron.config.js';
 import passport from "passport";
 
 import "./config/passport.config.js";
 import "./config/passport.kakao.config.js"
-
 // 환경 변수 설정
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 if (!process.env.DATABASE_URL) {
@@ -62,17 +54,12 @@ app.get('/', (req, res) => {
   res.send('API 연결 성공');
 });
 
-app.use('/api/challenge/admin', challengeAdminRoute)
-app.use('/api/challenge/inquiry', challengeInquiryRoute);
-app.use('/api/challenge', challengeCRUDRoute);
-app.use('/api/notice', noticeRoute);
-
-app.use('/api/challenge/work', challengeworkRoute);
-app.use('/api/challenge/feedback', challengeFeedbackRoute);
-app.use("/api/auth", authRoutes);
 app.use("/api/token", tokenRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/user", userRoutes);
+//로그인 로직들
+app.use("/api/auth", authRoutes);
+app.use("/api/device", deviceRoutes);
 app.use("/api/auth", googleRoutes);
 app.use("/api/auth", kakaoRoutes);
 
@@ -91,9 +78,6 @@ app.listen(PORT, async () => {
     // 데이터베이스 연결 테스트
     await prisma.$connect();
     console.log('✅ Database connected');
-
-    // 스케줄러 시작 (deadline 체크 및 알림)
-    startScheduler();
 
     // 서버 연결 테스트 엔드포인트
     app.get('/health', (req, res) => {

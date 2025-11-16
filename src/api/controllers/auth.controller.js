@@ -7,8 +7,8 @@ import { successResponse, errorResponse } from "../../utils/response.util.js";
 import { AUTH_ERROR_CODE } from "../../constants/error-code.constant.js";
 
 export const signupController = asyncHandler(async (req, res) => {
-  const { email, password, nickName } = req.body;
-  const { userId, email: userEmail, nickName: userNickName, role, accessToken, refreshToken } = await signup(email, password, nickName);
+  const { email, password, nickName, serialNum } = req.body;
+  const { userId, email: userEmail, nickName: userNickName, role, accessToken, refreshToken } = await signup(email, password, nickName, serialNum);
 
   res.cookie("refreshToken", refreshToken, cookiesOption);
 

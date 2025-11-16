@@ -17,20 +17,6 @@ export const AUTH_MESSAGE = {
   ACCESS_TOKEN_REFRESH_SUCCESS: 'Access Token 재발급 성공',
 };
 
-// 챌린지 관련 메시지
-export const CHALLENGE_MESSAGE = {
-  NOT_FOUND: '챌린지를 찾을 수 없습니다.',
-  INVALID_ID: '챌린지 ID가 없거나 올바르지 않습니다.',
-  CREATE_SUCCESS: '챌린지가 생성되었습니다.',
-  UPDATE_SUCCESS: '챌린지가 수정되었습니다.',
-  DELETE_SUCCESS: '챌린지가 삭제되었습니다.',
-  ALREADY_PARTICIPATING: '이미 참여 중인 챌린지입니다.',
-  CAPACITY_FULL: '챌린지 참여 인원이 가득 찼습니다.',
-  DEADLINE_PASSED: '챌린지 마감 기한이 지났습니다.',
-  REQUIRED_FIELDS_MISSING: '챌린지 추가에 필요한 값이 입력되지 않았습니다.',
-  INVALID_CAPACITY: '챌린지 인원은 2명 이상의 문자여야 합니다.',
-};
-
 // 사용자 관련 메시지
 export const USER_MESSAGE = {
   NOT_FOUND: '사용자를 찾을 수 없습니다.',
@@ -84,7 +70,6 @@ export const SUCCESS_MESSAGE = {
 
 export default {
   AUTH_MESSAGE,
-  CHALLENGE_MESSAGE,
   USER_MESSAGE,
   VALIDATION_MESSAGE,
   SERVER_MESSAGE,

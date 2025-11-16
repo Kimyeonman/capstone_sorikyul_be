@@ -1,4 +1,3 @@
-// swagger.js
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import path, { dirname } from 'path';
@@ -10,13 +9,13 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Docthrough API",
+      title: "Sorikyul API",
       version: "1.0.0",
-      description: "독스루 API 문서",
+      description: "소리결 API 문서",
     },
     servers: [
       { url: "http://localhost:3000", description: "개발 서버" },
-      { url: "https://fs08-docthrough.onrender.com", description: "운영 서버" },
+      { url: "https://sorikyul.onrender.com", description: "운영 서버" },
     ],
     components: {
       securitySchemes: {
@@ -42,14 +41,14 @@ const options = {
       },
     ],
   },
-  apis: [path.resolve(__dirname, "../swagger/*.js")], // JSDoc 기반 문서 생성
+  apis: [path.resolve(__dirname, "../swagger/*.js")], // 기존 JSDoc 문서 유지
 };
-
 
 const swaggerSpec = swaggerJsdoc(options);
 
 export function swaggerDocs(app) {
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
   console.log('📄 Swagger UI: http://localhost:3000/api-docs');
-  console.log('📄 Swagger UI: https://fs08-docthrough.onrender.com/api-docs');
+  console.log('📄 Swagger UI: https://sorikyul.onrender.com/api-docs');
 }
