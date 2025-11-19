@@ -8,6 +8,7 @@ export async function findUserProfileByToken(user_id){
       email: true,
       nick_name: true,
       role: true,
+      notice_set: true,
     },
   });
 }
