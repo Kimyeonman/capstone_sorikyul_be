@@ -34,3 +34,17 @@ export async function deleteUser(user_id) {
     },
   });
 }
+
+export async function toggleUserNoticeSet(userId) {
+  const user = await prisma.user.findUnique({
+    where: { user_id: userId },
+    select: { notice_set: true },
+  });
+
+  if (!user) return null;
+
+  return prisma.user.update({
+    where: { user_id: userId },
+    data: { notice_set: !user.notice_set },
+  });
+}

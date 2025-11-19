@@ -261,3 +261,53 @@
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
+
+
+/**
+ * @swagger
+ * /api/user/notice:
+ *   patch:
+ *     summary: 사용자 알림(Notice) 설정 토글
+ *     description: |
+ *       로그인된 사용자의 `notice_set` 값을 **true ↔ false** 로 전환합니다.  
+ *       - 기본값: `false`  
+ *       - `true` → `false`,  
+ *       - `false` → `true`
+ * 
+ *       이 API는 `Access Token`이 필요합니다.
+ *
+ *     tags: [User]
+ *     security:
+ *       - bearerAuth: []
+ *
+ *     responses:
+ *       200:
+ *         description: 알림 설정값 변경 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     userId:
+ *                       type: string
+ *                       example: "8e00069f-fc27-4f9b-8df8-a3aa947fb63a"
+ *                     noticeSet:
+ *                       type: boolean
+ *                       example: true
+ *
+ *       401:
+ *         description: 인증 실패(토큰 없음 또는 잘못된 토큰)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *
+ *       500:
+ *         description: 서버 내부 오류
+ */

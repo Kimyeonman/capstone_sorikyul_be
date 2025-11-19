@@ -3,6 +3,7 @@ import {
   findUserProfileByToken,
   updateUser,
   deleteUser,
+  toggleUserNoticeSet,
 } from "../repositories/user.repository.js";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
@@ -102,4 +103,20 @@ export async function deleteUserProfile(req){
   await updateRefreshToken(userId, "");
   
   return { message: "회원 탈퇴"};
+}
+
+export async function changeNoticeSetting(tokenPayload) {
+  const userId = tokenPayload.userId;
+
+  const user = await findUserProfileByToken(userId);
+  if (!user) {
+    throw new UnauthorizedError("유효하지 않은 사용자입니다.");
+  }
+
+  const updated = await toggleUserNoticeSet(userId);
+
+  return {
+    userId: updated.user_id,
+    noticeSet: updated.notice_set,
+  };
 }

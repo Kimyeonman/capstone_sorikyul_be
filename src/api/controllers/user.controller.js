@@ -4,6 +4,7 @@ import {
   getUserProfileFromToken,
   updateUserProfile,
   deleteUserProfile,
+  changeNoticeSetting
 } from "../services/user.service.js";
 import HTTP_STATUS from "../../constants/http.constant.js";
 import { successResponse } from "../../utils/response.util.js";
@@ -41,4 +42,13 @@ export const deleteUserProfileController = asyncHandler(async(req, res) => {
       message: result.message,
     })
   );
+});
+
+export const updateNoticeSetting = asyncHandler(async(req, res)=>{ 
+  const result = await changeNoticeSetting(req.auth);
+
+  res.status(200).json({
+    success: true,
+    data: result,
+  });
 });
