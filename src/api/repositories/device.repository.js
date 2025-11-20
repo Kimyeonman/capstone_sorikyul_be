@@ -18,7 +18,15 @@ export async function findDevicesBySerialNum(serialNum, page, limit) {
     orderBy: { created_at: "desc" }
   });
 }
-
+export async function countDevicesBySerialNum(serialNum) {
+  return prisma.device.count({
+    where: {
+      type: {
+        resberry_id: serialNum
+      }
+    }
+  });
+}
 
 export async function createNoise(dba, vibration, isNoise) {
   return prisma.noise.create({
