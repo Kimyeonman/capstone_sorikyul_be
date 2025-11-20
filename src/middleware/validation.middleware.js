@@ -1,6 +1,6 @@
 import { ZodError } from 'zod';
 import HTTP_STATUS from '../constants/http.constant.js';
-import { errorResponse } from '../../../../utils/response.util.js';
+import { errorResponse } from '../utils/response.util.js';
 
 /**
  * Schema description 또는 Jest testName 추출

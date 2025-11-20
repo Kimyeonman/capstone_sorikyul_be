@@ -1,10 +1,10 @@
 import {
-  findUserByEmail,
   findAllUsers,
   findUserByEmailAdmin,
   changeUserRoleByEmail,
 }
 from "../repositories/admin.repository.js";
+import { findUserByEmail } from "../repositories/auth.repository.js";
 
 export async function getAllUsers({ page, limit, search }){
   const pageNum = Number(page) || 1;

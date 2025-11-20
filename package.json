@@ -2,6 +2,18 @@
   "name": "fs08-docthrough-team2-be",
   "version": "1.0.0",
   "description": "--",
+  "keywords": [],
+  "homepage": "https://github.com/fs08-docthrough-team2/fs08-docthrough-team2-be#readme",
+  "bugs": {
+    "url": "https://github.com/fs08-docthrough-team2/fs08-docthrough-team2-be/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fs08-docthrough-team2/fs08-docthrough-team2-be.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
   "main": "src/app.js",
   "scripts": {
     "prepare": "husky",
@@ -17,21 +29,6 @@
     "test:watch": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --watch",
     "test:coverage": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --coverage"
   },
-  "prisma": {
-    "seed": "node prisma/seed.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fs08-docthrough-team2/fs08-docthrough-team2-be.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
-  "bugs": {
-    "url": "https://github.com/fs08-docthrough-team2/fs08-docthrough-team2-be/issues"
-  },
-  "homepage": "https://github.com/fs08-docthrough-team2/fs08-docthrough-team2-be#readme",
   "dependencies": {
     "@prisma/client": "^5.15.0",
     "argon2": "^0.44.0",
@@ -63,5 +60,8 @@
     "jest": "^30.2.0",
     "nodemon": "^3.1.11",
     "prettier": "^3.6.2"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   }
 }
