@@ -1,6 +1,9 @@
 import { 
   findDevicesBySerialNum,
   countDevicesBySerialNum,
+  createType,
+  createNoise,
+  createDevice,
 } from "../repositories/device.repository.js";
 import { findUserById } from "../repositories/auth.repository.js";
 import { UnauthorizedError } from "../../utils/error.util.js"

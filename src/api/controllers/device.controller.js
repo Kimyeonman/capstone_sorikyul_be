@@ -1,5 +1,8 @@
 import { asyncHandler } from "../../middleware/error.middleware.js";
-import { getDeviceList } from "../services/device.service.js";
+import { 
+  getDeviceList,
+  saveDeviceRecords
+} from "../services/device.service.js";
 import HTTP_STATUS from "../../constants/http.constant.js";
 import { successResponse } from "../../utils/response.util.js";
 
@@ -20,4 +23,18 @@ export const getDeviceListController = asyncHandler(async (req, res) => {
         message: "디바이스 기반 로그 조회 성공",
       })
     );
+});
+
+
+
+export const uploadDeviceData = asyncHandler(async (req, res) => {
+  const { serialNum, records } = req.body;
+
+  const result = await saveDeviceRecords(serialNum, records);
+
+  res.status(HTTP_STATUS.CREATED).json(
+    successResponse({
+      data: result,
+    })
+  );
 });

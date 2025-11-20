@@ -1,31 +1,3 @@
-// 검증 관련 상수
-
-// 챌린지 필드 Enum (Prisma에서 가져오는 것이 더 안전하지만, 문서화 목적으로 정의)
-export const CHALLENGE_FIELD = {
-  NEXT: 'NEXT',
-  MODERN: 'MODERN',
-  API: 'API',
-  WEB: 'WEB',
-  CAREER: 'CAREER',
-};
-
-// 챌린지 타입 Enum
-export const CHALLENGE_TYPE = {
-  OFFICIAL: 'OFFICIAL',
-  BLOG: 'BLOG',
-};
-
-// 챌린지 상태 Enum (Prisma Schema와 일치)
-export const CHALLENGE_STATUS = {
-  DEADLINE: 'DEADLINE',
-  INPROGRESS: 'INPROGRESS',
-  APPROVED: 'APPROVED',
-  REJECTED: 'REJECTED',
-  CANCELLED: 'CANCELLED',
-  PENDING: 'PENDING',
-  DELETED: 'DELETED',
-};
-
 // 사용자 역할 Enum
 export const USER_ROLE = {
   USER: 'USER',
@@ -56,16 +28,9 @@ export const VALIDATION_RULES = {
   // 비밀번호
   MIN_PASSWORD_LENGTH: 8,
   MAX_PASSWORD_LENGTH: 100,
-
-  // 챌린지
-  MIN_CAPACITY: 1,
-  MAX_CAPACITY: 1000,
 };
 
 export default {
-  CHALLENGE_FIELD,
-  CHALLENGE_TYPE,
-  CHALLENGE_STATUS,
   USER_ROLE,
   SORT_ORDER,
   VALIDATION_RULES,

@@ -6,5 +6,9 @@ import * as errorMiddleware from '../../middleware/error.middleware.js';
 const router = express.Router();
 
 router.get("/list", authMiddleware.verifyAccessToken, getDeviceListController);
+
+router.post("/upload", deviceController.uploadDeviceData);
+
 router.use(errorMiddleware.errorHandler);
+
 export default router;
