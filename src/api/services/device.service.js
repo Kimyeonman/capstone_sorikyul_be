@@ -56,3 +56,40 @@ export async function getDeviceList(tokenPayload, page = 1, limit = 10, adminSer
     }
   };
 }
+
+
+export async function saveDeviceRecords(serialNum, records) {
+  console.log("[SERVICE] saveDeviceRecords 호출됨");
+
+  if (!serialNum || !Array.isArray(records)) {
+    throw new Error("잘못된 요청 데이터입니다.");
+  }
+
+  for (const r of records) {
+    const noise = await prisma.noise.create({
+      data: {
+        dba: r.noise.dba,
+        vilbration: String(r.noise.vibration),
+        is_noise: r.noise.dba >= 70,
+        created_at: new Date(r.timestamp),
+        updated_at: new Date(r.timestamp),
+      },
+    });
+
+    const type = await prisma.type.create({
+      data: {
+        nosise_types: r.yamnet.label,
+        resberry_id: serialNum,
+      },
+    });
+
+    await prisma.device.create({
+      data: {
+        type_id: type.type_id,
+        noise_id: noise.noise_id,
+      },
+    });
+  }
+
+  return { message: "저장 완료", count: records.length };
+}

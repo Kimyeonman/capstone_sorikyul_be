@@ -18,6 +18,7 @@ export async function findDevicesBySerialNum(serialNum, page, limit) {
     orderBy: { created_at: "desc" }
   });
 }
+
 export async function countDevicesBySerialNum(serialNum) {
   return prisma.device.count({
     where: {
