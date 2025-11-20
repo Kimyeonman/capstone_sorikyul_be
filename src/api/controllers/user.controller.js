@@ -7,7 +7,7 @@ import {
   changeNoticeSetting
 } from "../services/user.service.js";
 import HTTP_STATUS from "../../constants/http.constant.js";
-import { successResponse } from "../../../../../utils/response.util.js";
+import { successResponse } from "../../utils/response.util.js";
 
 export const getMyInfoController = asyncHandler(async(req, res) => {
   const tokenPayload = req.auth;

@@ -4,7 +4,7 @@ import {
   saveDeviceRecords
 } from "../services/device.service.js";
 import HTTP_STATUS from "../../constants/http.constant.js";
-import { successResponse } from "../../../../../utils/response.util.js";
+import { successResponse } from "../../utils/response.util.js";
 
 export const getDeviceListController = asyncHandler(async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
