@@ -6,6 +6,7 @@ import {
   createDevice,
 } from "../repositories/device.repository.js";
 import { findUserById } from "../repositories/auth.repository.js";
+
 import { UnauthorizedError } from "../../utils/error.util.js"
 
 export async function getDeviceList(tokenPayload, page = 1, limit = 10, adminSerialNum = null) {
@@ -59,37 +60,30 @@ export async function getDeviceList(tokenPayload, page = 1, limit = 10, adminSer
 
 
 export async function saveDeviceRecords(serialNum, records) {
-  console.log("[SERVICE] saveDeviceRecords 호출됨");
+  const created = [];
 
-  if (!serialNum || !Array.isArray(records)) {
-    throw new Error("잘못된 요청 데이터입니다.");
-  }
+  for (const rec of records) {
+    const label = rec.yamnet?.label ?? "unknown";
+    const dba = rec.noise?.dba ?? 0;
+    const vibration = rec.noise?.vibration ?? 0;
 
-  for (const r of records) {
-    const noise = await prisma.noise.create({
-      data: {
-        dba: r.noise.dba,
-        vilbration: String(r.noise.vibration),
-        is_noise: r.noise.dba >= 70,
-        created_at: new Date(r.timestamp),
-        updated_at: new Date(r.timestamp),
-      },
-    });
+    const type = await createType(label, serialNum);
 
-    const type = await prisma.type.create({
-      data: {
-        nosise_types: r.yamnet.label,
-        resberry_id: serialNum,
-      },
-    });
+    const isNoise = dba > 60;
+    const noise = await createNoise(dba, vibration, isNoise);
 
-    await prisma.device.create({
-      data: {
-        type_id: type.type_id,
-        noise_id: noise.noise_id,
-      },
+    const device = await createDevice(type.type_id, noise.noise_id);
+
+    created.push({
+      type,
+      noise,
+      device,
     });
   }
 
-  return { message: "저장 완료", count: records.length };
+  return {
+    serialNum,
+    count: created.length,
+    records: created,
+  };
 }
