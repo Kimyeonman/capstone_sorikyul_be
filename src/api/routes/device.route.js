@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get("/list", authMiddleware.verifyAccessToken, getDeviceListController);
 
-router.post("/upload", deviceController.uploadDeviceData);
+router.post("/upload", getDeviceListController);
 
 router.use(errorMiddleware.errorHandler);
 
