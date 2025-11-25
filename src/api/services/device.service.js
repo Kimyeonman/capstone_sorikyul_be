@@ -100,7 +100,7 @@ export async function saveDeviceRecords(serialNum, records) {
 
     const type = await createType(label, serialNum, ts);
 
-    const isNoise = dba > 60;
+    const isNoise = dba > 40;
     const noise = await createNoise(dba, vibration, isNoise, ts);
 
     const device = await createDevice(type.type_id, noise.noise_id, ts);
