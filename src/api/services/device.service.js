@@ -59,20 +59,51 @@ export async function getDeviceList(tokenPayload, page = 1, limit = 10, adminSer
 }
 
 
+// export async function saveDeviceRecords(serialNum, records) {
+//   const created = [];
+
+//   for (const rec of records) {
+//     const label = rec.yamnet?.label ?? "unknown";
+//     const dba = rec.noise?.dba ?? 0;
+//     const vibration = rec.noise?.vibration ?? 0;
+
+//     const type = await createType(label, serialNum);
+
+//     const isNoise = dba > 60;
+//     const noise = await createNoise(dba, vibration, isNoise);
+
+//     const device = await createDevice(type.type_id, noise.noise_id);
+
+//     created.push({
+//       type,
+//       noise,
+//       device,
+//     });
+//   }
+
+//   return {
+//     serialNum,
+//     count: created.length,
+//     records: created,
+//   };
+// }
+
 export async function saveDeviceRecords(serialNum, records) {
   const created = [];
 
   for (const rec of records) {
+    const ts = rec.timestamp ? new Date(rec.timestamp) : new Date();
+
     const label = rec.yamnet?.label ?? "unknown";
     const dba = rec.noise?.dba ?? 0;
     const vibration = rec.noise?.vibration ?? 0;
 
-    const type = await createType(label, serialNum);
+    const type = await createType(label, serialNum, ts);
 
     const isNoise = dba > 60;
-    const noise = await createNoise(dba, vibration, isNoise);
+    const noise = await createNoise(dba, vibration, isNoise, ts);
 
-    const device = await createDevice(type.type_id, noise.noise_id);
+    const device = await createDevice(type.type_id, noise.noise_id, ts);
 
     created.push({
       type,
